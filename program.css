@@ -1,0 +1,33 @@
+#container {
+    display: inline-block;
+/*
+    border: 1px solid blue;
+*/
+    }
+
+#boardContainer {
+    border: 1px solid black;
+/*
+    display: none;
+*/
+    }
+    
+#shipHarborContainer {
+    border: 1px solid black;
+/*
+    position: absolute;
+    left: 575px;
+    top: 13px;
+*/
+    }
+    
+#messages {
+    border: 1px solid black;
+    }
+
+ul {
+    list-syle-type: none;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
