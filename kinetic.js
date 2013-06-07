@@ -1,5 +1,5 @@
 var boardSize = 10;
-var tileSize = 50;
+var tileSize = 50/2;   //divided for more simple testing
 var tileMargin = 5;
 var tileLineWidth = 0;
 var boardCoords = {};
@@ -192,7 +192,7 @@ var shipFleet = {
         "harborY": tileMargin
     },
     battleship: {
-        "Name": "Battleship",
+        "name": "Battleship",
         "size": 4,
         "numOfShips": 1,
         "harborX": boardMargin,
@@ -207,57 +207,9 @@ var shipFleet = {
     }
 };
 
-var drawShips = function() {
+var drawShipFleet = function() {
     
-    //~ testGroup = new Kinetic.Group({
-        //~ draggable: true,
-    //~ });
-    //~ var testShape = new Kinetic.Rect({
-        //~ x: 50,
-        //~ y: 50,
-        //~ width: 50,
-        //~ height: 50,
-        //~ fill: 'red'
-    //~ });
-    //~ testGroup.on('click', function() {
-        //~ testGroup.rotateDeg(90);
-    //~ });
-    //~ testGroup.on('dragend', function() {
-        //~ function nearestGrid(shipToDrop, gridCoordToDropOn) {
-            //~ var shipCoord = shipToDrop;
-            //~ var gridCoord = gridCoordToDropOn;
-            //~ var shipCoordX = shipCoord.getX();
-            //~ var shipCoordY = shipCoord.getY();
-//~ 
-            //~ if(shipCoordX > gridCoord.x - 20 && shipCoordX < gridCoord.y + 20 && shipCoordY > gridCoord.y - 20 && shipCoordY < gridCoord.y + 20) {
-                //~ return true;
-            //~ } else {
-                //~ return false;
-            //~ };
-        //~ };
-        //~ 
-        //~ if (nearestGrid(shipToDrop, gridCoord)) {
-            //~ ship.setPosition(gridCoord.x, gridCoord.y);
-            //~ shipLayer.draw();
-        //~ };
-    //~ });
-    //~ testGroup.add(testShape);
-    //~ shipLayer.add(testGroup);
-    //~ boardStage.add(shipLayer);
-
-    for (ship in shipFleet) {
-        var shipName = ship;
-        shipName = new Kinetic.Group({
-            draggable: true,
-        });
-        shipName.on('dragend', function() {
-            var tacoX = shipName.getPosition().x;
-            var tacoY = shipName.getPosition().y;
-            alert(tacoX +","+ tacoY);
-        });
-        
-        tileX = shipFleet[ship].harborX;
-        tileY = shipFleet[ship].harborY;
+    var drawShip = function(orientation) {
         for (i=0; i<shipFleet[ship].size; i++) {
             var rect = new Kinetic.Rect({
             x: tileX,
@@ -266,14 +218,48 @@ var drawShips = function() {
             height: tileSize,
             stroke: 'black',
             fill: 'green',
-            });            
-            shipName.add(rect)
-            shipLayer.add(shipName);
-            tileY += tileSize + tileMargin;
+            });
+            groupName.add(rect);
+            if (orientation === "vertical") {
+                tileY += tileSize + tileMargin;
+            } else {
+                tileX += tileSize + tileMargin;
+            };
         };
     };
+
+    for (ship in shipFleet) {
+        tileX = shipFleet[ship].harborX;
+        tileY = shipFleet[ship].harborY;
+        groupName = new Kinetic.Group({
+            draggable: true,
+            id: ship
+        });
+        groupName.on('dragend', function() {
+            var shipName = this.getId();
+            var groupX = this.getPosition().x + shipFleet[shipName].harborX;
+            var groupY = this.getPosition().y + shipFleet[shipName].harborY;
+            alert(groupX + "," + groupY + "\n" + shipName + ".");
+        });
+        groupName.on('click', function() {
+            //~ var shipName = this.getId();
+            //~ var shipSize = shipFleet[shipName].size
+            //~ var groupWidth = tileSize;
+            //~ var groupHeight = (shipSize * tileSize) + ((shipSize -1) * shipMargin);
+            //~ alert(shipName + ": " + groupWidth + " , " + groupHeight);
+            //~ this.setOffset(groupWidth/2, groupHeight/2);
+            //~ this.setOffset(groupWidth/2, groupHeight/2);
+            //~ this.setRotation(90 + Math.PI/180);
+            //~ this.setRotationDeg(90);
+            //~ shipLayer.add(this);
+            //~ shipLayer.draw();
+        });
+        drawShip("vertical");
+        shipLayer.add(groupName);
+    };
     boardStage.add(shipLayer);
+
 };
 
 setUpGame();
-drawShips();
+drawShipFleet();
