@@ -249,7 +249,12 @@ var drawShips = function() {
         var shipName = ship;
         shipName = new Kinetic.Group({
             draggable: true,
-            });
+        });
+        shipName.on('dragend', function() {
+            var tacoX = shipName.getPosition().x;
+            var tacoY = shipName.getPosition().y;
+            alert(tacoX +","+ tacoY);
+        });
         
         tileX = shipFleet[ship].harborX;
         tileY = shipFleet[ship].harborY;
