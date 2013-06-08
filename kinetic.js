@@ -16,7 +16,6 @@ var boardStage = new Kinetic.Stage({
 var gridLayer = new Kinetic.Layer();
 var statusLayer = new Kinetic.Layer();
 var shipLayer = new Kinetic.Layer();
-var shipLayer = new Kinetic.Layer();
 
 var createBoardCoords = function() {
     var tileX = tileStartX = tileMargin; // horizontal
@@ -241,19 +240,10 @@ var drawShipFleet = function() {
             var groupY = this.getPosition().y + shipFleet[shipName].harborY;
             alert(groupX + "," + groupY + "\n" + shipName + ".");
         });
-        groupName.on('click', function() {
-            //~ var shipName = this.getId();
-            //~ var shipSize = shipFleet[shipName].size
-            //~ var groupWidth = tileSize;
-            //~ var groupHeight = (shipSize * tileSize) + ((shipSize -1) * shipMargin);
-            //~ alert(shipName + ": " + groupWidth + " , " + groupHeight);
-            //~ this.setOffset(groupWidth/2, groupHeight/2);
-            //~ this.setOffset(groupWidth/2, groupHeight/2);
-            //~ this.setRotation(90 + Math.PI/180);
-            //~ this.setRotationDeg(90);
-            //~ shipLayer.add(this);
-            //~ shipLayer.draw();
+        groupName.on('click', function() {            
+            alert('rotate sucks');
         });
+        
         drawShip("vertical");
         shipLayer.add(groupName);
     };
